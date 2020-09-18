@@ -300,6 +300,10 @@ private String generatePodSpec(Map config) {
         ]
     ]
     podSpec.spec.securityContext = getSecurityContext(config)
+    
+    if expertMode
+      podSpec.spec += config.additionalPodProperties 
+    
 
     return new JsonUtils().groovyObjectToPrettyJsonString(podSpec)
 }
