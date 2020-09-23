@@ -1,11 +1,13 @@
 package cmd
 
 import (
-	"github.com/SAP/jenkins-library/pkg/npm"
 	"os"
 	"testing"
 
+	"github.com/SAP/jenkins-library/pkg/npm"
+
 	"fmt"
+
 	piperhttp "github.com/SAP/jenkins-library/pkg/http"
 	"github.com/SAP/jenkins-library/pkg/maven"
 	"github.com/SAP/jenkins-library/pkg/mock"
@@ -368,11 +370,11 @@ func (f *MtaTestFileUtilsMock) Abs(path string) (string, error) {
 }
 
 func (f *MtaTestFileUtilsMock) Glob(pattern string) (matches []string, err error) {
-	return nil, fmt.Errorf("not implemented. func is only present in order to fullfil the interface contract. Needs to be ajusted in case it gets used.")
+	return nil, fmt.Errorf("not implemented") // func is only present in order to fullfil the interface contract. Needs to be ajusted in case it gets used.
 }
 
 func (f *MtaTestFileUtilsMock) Chmod(path string, mode os.FileMode) error {
-	return fmt.Errorf("not implemented. func is only present in order to fullfil the interface contract. Needs to be ajusted in case it gets used.")
+	return fmt.Errorf("not implemented") // func is only present in order to fullfil the interface contract. Needs to be ajusted in case it gets used.
 }
 
 func newNpmExecutor(execRunner *mock.ExecMockRunner) *npm.Execute {

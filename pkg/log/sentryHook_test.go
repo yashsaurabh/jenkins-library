@@ -59,8 +59,8 @@ func TestSentryHookManualTag(t *testing.T) {
 
 func TestSentryHookAutomaticTags(t *testing.T) {
 	sentryDsn := "http://publickey@url.to.sentry/1"
-	corrId := "correlationId"
-	hook := NewSentryHook(sentryDsn, corrId)
+	corrID := "correlationId"
+	hook := NewSentryHook(sentryDsn, corrID)
 	stepName := "stepName"
 	category := "category"
 	value := "testValue"
@@ -76,7 +76,7 @@ func TestSentryHookAutomaticTags(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, value, hook.tags[stepName])
 	assert.Equal(t, value, hook.tags[category])
-	assert.Equal(t, corrId, hook.tags[corrId])
+	assert.Equal(t, corrID, hook.tags[corrID])
 }
 
 func TestSentryHookException(t *testing.T) {

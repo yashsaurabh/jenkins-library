@@ -2,11 +2,12 @@ package maven
 
 import (
 	"fmt"
-	piperhttp "github.com/SAP/jenkins-library/pkg/http"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"os"
 	"testing"
+
+	piperhttp "github.com/SAP/jenkins-library/pkg/http"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestSettings(t *testing.T) {
@@ -176,13 +177,13 @@ func (f *fileUtilsMock) MkdirAll(path string, perm os.FileMode) error {
 }
 
 func (f *fileUtilsMock) Chmod(path string, mode os.FileMode) error {
-	return fmt.Errorf("not implemented. func is only present in order to fullfil the interface contract. Needs to be ajusted in case it gets used.")
+	return fmt.Errorf("not implemented") // func is only present in order to fullfil the interface contract. Needs to be ajusted in case it gets used.
 }
 
 func (f *fileUtilsMock) Abs(path string) (string, error) {
-	return "", fmt.Errorf("not implemented. func is only present in order to fullfil the interface contract. Needs to be ajusted in case it gets used.")
+	return "", fmt.Errorf("not implemented") // func is only present in order to fullfil the interface contract. Needs to be ajusted in case it gets used.
 }
 
 func (f *fileUtilsMock) Glob(pattern string) (matches []string, err error) {
-	return nil, fmt.Errorf("not implemented. func is only present in order to fullfil the interface contract. Needs to be ajusted in case it gets used.")
+	return nil, fmt.Errorf("not implemented") // func is only present in order to fullfil the interface contract. Needs to be ajusted in case it gets used.
 }

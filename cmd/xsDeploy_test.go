@@ -4,13 +4,14 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/SAP/jenkins-library/pkg/mock"
-	"github.com/stretchr/testify/assert"
 	"io"
 	"io/ioutil"
 	"os"
 	"sync"
 	"testing"
+
+	"github.com/SAP/jenkins-library/pkg/mock"
+	"github.com/stretchr/testify/assert"
 )
 
 type FileUtilsMock struct {
@@ -39,15 +40,15 @@ func (f *FileUtilsMock) MkdirAll(path string, perm os.FileMode) error {
 }
 
 func (f *FileUtilsMock) Chmod(path string, mode os.FileMode) error {
-	return fmt.Errorf("not implemented. func is only present in order to fullfil the interface contract. Needs to be ajusted in case it gets used.")
+	return fmt.Errorf("not implemented") // func is only present in order to fullfil the interface contract. Needs to be ajusted in case it gets used.
 }
 
 func (f *FileUtilsMock) Abs(path string) (string, error) {
-	return "", fmt.Errorf("not implemented. func is only present in order to fullfil the interface contract. Needs to be ajusted in case it gets used.")
+	return "", fmt.Errorf("not implemented") // func is only present in order to fullfil the interface contract. Needs to be ajusted in case it gets used.
 }
 
 func (f *FileUtilsMock) Glob(pattern string) (matches []string, err error) {
-	return nil, fmt.Errorf("not implemented. func is only present in order to fullfil the interface contract. Needs to be ajusted in case it gets used.")
+	return nil, fmt.Errorf("not implemented") // func is only present in order to fullfil the interface contract. Needs to be ajusted in case it gets used.
 }
 
 func TestDeploy(t *testing.T) {

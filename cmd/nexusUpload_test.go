@@ -2,15 +2,16 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+
 	"github.com/SAP/jenkins-library/pkg/command"
 	"github.com/SAP/jenkins-library/pkg/maven"
 	"github.com/SAP/jenkins-library/pkg/mock"
 	"github.com/SAP/jenkins-library/pkg/nexus"
 	"github.com/stretchr/testify/assert"
-	"os"
-	"path/filepath"
-	"strings"
-	"testing"
 )
 
 type mockUtilsBundle struct {
@@ -123,7 +124,7 @@ modules:
   type: java
 `)
 
-var testPomXml = []byte(`
+var testPomXML = []byte(`
 <project>
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.mycompany.app</groupId>
@@ -132,7 +133,7 @@ var testPomXml = []byte(`
 </project>
 `)
 
-var testPackageJson = []byte(`{
+var testPackageJSON = []byte(`{
   "name": "npm-nexus-upload-test",
   "version": "1.0.0"
 }
@@ -358,7 +359,7 @@ func TestUploadArtifacts(t *testing.T) {
 func TestUploadNpmProjects(t *testing.T) {
 	t.Run("Test uploading simple npm project", func(t *testing.T) {
 		utils := newMockUtilsBundle(false, false, true)
-		utils.AddFile("package.json", testPackageJson)
+		utils.AddFile("package.json", testPackageJSON)
 		uploader := mockUploader{}
 		options := createOptions()
 		options.Username = "admin"
@@ -392,7 +393,7 @@ func TestUploadMavenProjects(t *testing.T) {
 		utils.setProperty("pom.xml", "project.artifactId", "my-app")
 		utils.setProperty("pom.xml", "project.packaging", "pom")
 		utils.setProperty("pom.xml", "project.build.finalName", "my-app-1.0")
-		utils.AddFile("pom.xml", testPomXml)
+		utils.AddFile("pom.xml", testPomXML)
 		uploader := mockUploader{}
 		options := createOptions()
 
@@ -414,7 +415,7 @@ func TestUploadMavenProjects(t *testing.T) {
 		utils.setProperty("pom.xml", "project.artifactId", "my-app")
 		utils.setProperty("pom.xml", "project.packaging", "jar")
 		utils.setProperty("pom.xml", "project.build.finalName", "my-app-1.0")
-		utils.AddFile("pom.xml", testPomXml)
+		utils.AddFile("pom.xml", testPomXML)
 		utils.AddDir("target")
 		uploader := mockUploader{}
 		options := createOptions()
@@ -430,7 +431,7 @@ func TestUploadMavenProjects(t *testing.T) {
 		utils.setProperty("pom.xml", "project.artifactId", "my-app")
 		utils.setProperty("pom.xml", "project.packaging", "jar")
 		utils.setProperty("pom.xml", "project.build.finalName", "my-app-1.0")
-		utils.AddFile("pom.xml", testPomXml)
+		utils.AddFile("pom.xml", testPomXML)
 		utils.AddFile(filepath.Join("target", "my-app-1.0.jar"), []byte("contentsOfJar"))
 		uploader := mockUploader{}
 		options := createOptions()
@@ -457,7 +458,7 @@ func TestUploadMavenProjects(t *testing.T) {
 		utils.setProperty("pom.xml", "project.artifactId", "my-app")
 		utils.setProperty("pom.xml", "project.packaging", "<empty>")
 		utils.setProperty("pom.xml", "project.build.finalName", "my-app-1.0")
-		utils.AddFile("pom.xml", testPomXml)
+		utils.AddFile("pom.xml", testPomXML)
 		utils.AddFile(filepath.Join("target", "my-app-1.0.jar"), []byte("contentsOfJar"))
 		uploader := mockUploader{}
 		options := createOptions()
@@ -482,7 +483,7 @@ func TestUploadMavenProjects(t *testing.T) {
 		utils.setProperty("pom.xml", "project.artifactId", "my-app")
 		utils.setProperty("pom.xml", "project.packaging", "pom")
 		utils.setProperty("pom.xml", "project.build.finalName", "my-app-1.0")
-		utils.AddFile("pom.xml", testPomXml)
+		utils.AddFile("pom.xml", testPomXML)
 		uploader := mockUploader{}
 		options := createOptions()
 		options.GroupID = "awesome.group"
@@ -507,7 +508,7 @@ func TestUploadMavenProjects(t *testing.T) {
 		utils.setProperty("pom.xml", "project.groupId", "awesome.group")
 		utils.setProperty("pom.xml", "project.artifactId", "my-app")
 		utils.setProperty("pom.xml", "project.packaging", "jar")
-		utils.AddFile("pom.xml", testPomXml)
+		utils.AddFile("pom.xml", testPomXML)
 		utils.AddFile(filepath.Join("target", "my-app-1.0.jar"), []byte("contentsOfJar"))
 		uploader := mockUploader{}
 		options := createOptions()
@@ -554,15 +555,15 @@ func TestUploadMavenProjects(t *testing.T) {
 		utils.setProperty("performance-tests/pom.xml", "project.groupId", "com.mycompany.app")
 		utils.setProperty("performance-tests/pom.xml", "project.artifactId", "my-app-app")
 		utils.setProperty("performance-tests/pom.xml", "project.packaging", "")
-		utils.AddFile("pom.xml", testPomXml)
-		utils.AddFile(filepath.Join("application", "pom.xml"), testPomXml)
+		utils.AddFile("pom.xml", testPomXML)
+		utils.AddFile(filepath.Join("application", "pom.xml"), testPomXML)
 		utils.AddFile("application/target/final-artifact.war", []byte("contentsOfJar"))
 		utils.AddFile("application/target/final-artifact-classes.jar", []byte("contentsOfClassesJar"))
-		utils.AddFile("integration-tests/pom.xml", testPomXml)
+		utils.AddFile("integration-tests/pom.xml", testPomXML)
 		utils.AddFile("integration-tests/target/final-artifact-integration-tests.jar", []byte("contentsOfJar"))
-		utils.AddFile("unit-tests/pom.xml", testPomXml)
+		utils.AddFile("unit-tests/pom.xml", testPomXML)
 		utils.AddFile("unit-tests/target/final-artifact-unit-tests.jar", []byte("contentsOfJar"))
-		utils.AddFile("performance-tests/pom.xml", testPomXml)
+		utils.AddFile("performance-tests/pom.xml", testPomXML)
 		uploader := mockUploader{}
 		options := createOptions()
 
@@ -624,7 +625,7 @@ func TestUploadMavenProjects(t *testing.T) {
 		utils.setProperty("pom.xml", "project.artifactId", "my-app")
 		utils.setProperty("pom.xml", "project.packaging", "pom")
 		utils.setProperty("pom.xml", "project.build.finalName", "my-app-1.0")
-		utils.AddFile("pom.xml", testPomXml)
+		utils.AddFile("pom.xml", testPomXML)
 		uploader := mockUploader{}
 		options := createOptions()
 		options.Username = "admin"
