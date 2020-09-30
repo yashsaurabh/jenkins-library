@@ -468,6 +468,9 @@ spec:
           - STAGES
           - STEPS
         default: maven
+        resourceRef:
+          - name: commonPipelineEnvironment
+            param: buildTool
       # Global maven settings, should be added to all maven steps
       - name: projectSettingsFile
         type: string
