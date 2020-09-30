@@ -336,7 +336,7 @@ func TestParametersAreValidated(t *testing.T) {
 		{
 			nameOfRun:     "all parameters empty",
 			config:        fortifyExecuteScanOptions{},
-			expectedError: "Unable to get artifact from descriptor : build tool '' not supported",
+			expectedError: "unable to get artifact from descriptor : build tool '' not supported",
 		},
 	}
 
