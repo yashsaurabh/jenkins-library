@@ -135,30 +135,11 @@ spec:
         default: true
       - name: buildDescriptorFile
         type: string
-        conditions:
-          - conditionRef: strings-equal
-            params:
-              - name: buildTool
-                value: maven
         description: "Path to the build descriptor file addressing the module/folder to be scanned."
         scope:
           - PARAMETERS
           - STAGES
           - STEPS
-        default: ./pom.xml
-      - name: buildDescriptorFile
-        type: string
-        conditions:
-          - conditionRef: strings-equal
-            params:
-              - name: buildTool
-                value: pip
-        description: "Path to the build descriptor file addressing the module/folder to be scanned."
-        scope:
-          - PARAMETERS
-          - STAGES
-          - STEPS
-        default: ./setup.py
       - name: commitId
         description: "Set the Git commit ID for identifying artifacts throughout the scan."
         resourceRef:
