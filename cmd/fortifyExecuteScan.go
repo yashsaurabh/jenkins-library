@@ -607,7 +607,7 @@ func triggerFortifyScan(config fortifyExecuteScanOptions, command fortifyExecRun
 	}
 
 	classpath := ""
-	if config.BuildTool == "maven" {
+	if config.BuildTool == "maven" || config.BuildTool == "mta" {
 		if config.AutodetectClasspath {
 			classpath = autoresolveMavenClasspath(config, classpathFileName, command)
 		}
@@ -786,7 +786,7 @@ func appendToOptions(config *fortifyExecuteScanOptions, options []string, t map[
 			options = append(options, "-libdirs", t["libDirs"])
 		}
 
-	case "maven":
+	case "maven", "mta":
 		if len(t["autoClasspath"]) > 0 {
 			options = append(options, "-cp", t["autoClasspath"])
 		} else if len(t["classpath"]) > 0 {
