@@ -74,6 +74,9 @@ func determineArtifact(config fortifyExecuteScanOptions, c *command.Command) (ve
 		ProjectSettingsFile: config.ProjectSettingsFile,
 	}
 
+	log.Entry().Infof("Getting artifact from descriptor (buildTool: '%s', buildDescriptorFile: '%s').",
+		config.BuildTool, config.BuildDescriptorFile)
+
 	artifact, err := versioning.GetArtifact(config.BuildTool, config.BuildDescriptorFile, &versioningOptions, c)
 	if err != nil {
 		return nil, fmt.Errorf("unable to get artifact from descriptor %v: %w", config.BuildDescriptorFile, err)
