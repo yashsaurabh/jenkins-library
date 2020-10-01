@@ -467,7 +467,6 @@ spec:
           - PARAMETERS
           - STAGES
           - STEPS
-        default: maven
         resourceRef:
           - name: commonPipelineEnvironment
             param: buildTool
