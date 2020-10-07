@@ -1,4 +1,5 @@
 import com.sap.piper.BashUtils
+import com.sap.piper.Credential
 import com.sap.piper.DebugReport
 import com.sap.piper.DefaultValueCache
 import com.sap.piper.JenkinsUtils
@@ -160,7 +161,7 @@ void credentialWrapper(config, List credentialInfo, body) {
         def creds = []
         def sshCreds = []
         credentialInfo.each { cred ->
-            switch(cred.type) {
+            switch("${cred.type}") {
                 case "file":
                     if (config[cred.id]) creds.add(file(credentialsId: config[cred.id], variable: cred.env[0]))
                     break
