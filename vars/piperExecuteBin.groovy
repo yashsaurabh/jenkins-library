@@ -166,6 +166,7 @@ void credentialWrapper(config, List credentialInfo, body) {
                     if (config[cred.id]) creds.add(file(credentialsId: config[cred.id], variable: cred.env[0]))
                     break
                 case "token":
+                case "secretText":
                     if (config[cred.id]) creds.add(string(credentialsId: config[cred.id], variable: cred.env[0]))
                     break
                 case "usernamePassword":
