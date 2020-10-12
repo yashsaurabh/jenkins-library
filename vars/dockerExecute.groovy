@@ -143,7 +143,7 @@ void call(Map parameters = [:], body) {
             stepParam2: isKubernetes()
         ], config)
 
-        echo "[MH]: kubernetes:  ${isKubernetes()}, dockerImage: config.dockerImage"
+        echo "[MH]: kubernetes:  ${isKubernetes()}, dockerImage: ${config.dockerImage}"
 
         if (isKubernetes() && config.dockerImage) {
             List dockerEnvVars = []
