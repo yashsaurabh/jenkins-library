@@ -290,8 +290,11 @@ void call(parameters = [:]) {
 
 @NonCPS
 private extractXcsrfTokenFromHeaders(headers){
-    def xcsrfTokenHeaderMatcher=headers =~ /(?m)^X-CSRF-Token: ([0-9A-Z]*)$/
-    return xcsrfTokenHeaderMatcher[0][1]
+    echo "headers: $headers"
+    def headersMap = readYaml text: headers
+    echo "headersMap: $headersMap"
+    echo "xcsrfToken: ${headersMap["X-CSRF-Token"]}"
+    return headersMap["X-CSRF-Token"]
 }
 
 private deploy(script, Map configuration, NeoCommandHelper neoCommandHelper, dockerImage, DeployMode deployMode) {
