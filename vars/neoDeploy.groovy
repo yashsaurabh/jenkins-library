@@ -1,3 +1,4 @@
+import com.cloudbees.groovy.cps.NonCPS
 import com.sap.piper.GenerateDocumentation
 import com.sap.piper.ConfigurationHelper
 import com.sap.piper.Utils
@@ -264,9 +265,7 @@ void call(parameters = [:]) {
                             \"https://sandboxportal-${account}.${host}/fiori/api/v1/csrf\"
                     """, returnStdout: true)
 
-                def xcsrfTokenHeaderMatcher=xcsrfTokenResponse =~ /(?m)^X-CSRF-Token: ([0-9A-Z]*)$/
-                echo "xxx: ${xcsrfTokenHeaderMatcher.size()}"
-                def xcsrfToken = xcsrfTokenHeaderMatcher[0][1]
+                def xcsrfToken = extractXcsrfTokenFromHeaders(xcsrfTokenResponse)
 
                 echo "xcsrf token is $xcsrfToken"
 
@@ -287,6 +286,12 @@ void call(parameters = [:]) {
             }
         }
     }
+}
+
+@NonCPS
+private extractXcsrfTokenFromHeaders(headers){
+    def xcsrfTokenHeaderMatcher=headers =~ /(?m)^X-CSRF-Token: ([0-9A-Z]*)$/
+    return xcsrfTokenHeaderMatcher[0][1]
 }
 
 private deploy(script, Map configuration, NeoCommandHelper neoCommandHelper, dockerImage, DeployMode deployMode) {
