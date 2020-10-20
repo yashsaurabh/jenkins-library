@@ -288,7 +288,6 @@ void call(parameters = [:]) {
     }
 }
 
-@NonCPS
 private extractXcsrfTokenFromHeaders(headers){
     echo "headers: $headers"
     def headersMap = readYaml text: headers
