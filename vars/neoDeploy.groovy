@@ -267,7 +267,6 @@ void call(parameters = [:]) {
                 def xcsrfTokenHeaderMatcher=xcsrfTokenResponse =~ /(?m)^X-CSRF-Token: ([0-9A-Z]*)$/
                 echo "xxx: ${xcsrfTokenHeaderMatcher.size()}"
                 def xcsrfToken = xcsrfTokenHeaderMatcher[0][1]
-                xcsrfTokenHeaderMatcher = null
 
                 echo "xcsrf token is $xcsrfToken"
 
@@ -275,8 +274,8 @@ void call(parameters = [:]) {
                 echo "Invalidating cache for siteId: ${siteId}"
 
                def status = sh(
-                   script: """#!/bin/bash
-                       curl -X POST -L \
+                   script: """
+                       curl -X POST -L -vvv \
                        -b 'cookies.jar'  \
                        -H "X-CSRF-Token: ${xcsrfToken}" \
                        -H "Authorization: Bearer ${bearerToken}" \
