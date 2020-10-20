@@ -266,7 +266,8 @@ void call(parameters = [:]) {
 
                 def xcsrfTokenHeaderMatcher=xcsrfTokenResponse =~ /(?m)^X-CSRF-Token: ([0-9A-Z]*)$/
                 echo "xxx: ${xcsrfTokenHeaderMatcher.size()}"
-                 def xcsrfToken = xcsrfTokenHeaderMatcher[0][1]
+                def xcsrfToken = xcsrfTokenHeaderMatcher[0][1]
+                xcsrfTokenHeaderMatcher = null
 
                 echo "xcsrf token is $xcsrfToken"
 
