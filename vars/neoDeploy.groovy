@@ -290,7 +290,7 @@ void call(parameters = [:]) {
 
 private extractXcsrfTokenFromHeaders(headers){
     echo "headers: $headers"
-    def headersMap = readYaml text: headers
+    def headersMap = readProperties text: headers
     echo "headersMap: $headersMap"
     echo "xcsrfToken: ${headersMap["X-CSRF-Token"]}"
     return headersMap["X-CSRF-Token"]
