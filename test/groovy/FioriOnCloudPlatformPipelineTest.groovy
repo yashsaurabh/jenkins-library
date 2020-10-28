@@ -115,6 +115,9 @@ class FioriOnCloudPlatformPipelineTest extends BasePiperTest {
         })
 
         UUID.metaClass.static.randomUUID = { -> 1 }
+
+        shellRule.setReturnValue(JenkinsShellCallRule.Type.REGEX, ".*--is-inside-work-tree.*", true)
+        shellRule.setReturnValue(JenkinsShellCallRule.Type.REGEX, ".*git rev-parse HEAD.*", '0123456789012345678901234567890123456789')
     }
 
     @After
