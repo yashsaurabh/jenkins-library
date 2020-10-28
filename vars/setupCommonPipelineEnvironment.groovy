@@ -101,6 +101,7 @@ void call(Map parameters = [:]) {
         Map config = ConfigurationHelper.newInstance(this)
             .loadStepDefaults()
             .mixinGeneralConfig(script.commonPipelineEnvironment, GENERAL_CONFIG_KEYS)
+            .mixin(parameters, PARAMETER_KEYS)
             .use()
 
         inferBuildTool(script, config)
@@ -119,7 +120,7 @@ void call(Map parameters = [:]) {
             script.commonPipelineEnvironment.setGitCommitId(gitCommitId)
         }
 
-        if (gitUrl) {
+        if (config.gitUrl) {
             setGitUrlsOnCommonPipelineEnvironment(script, gitUrl)
         }
     }
