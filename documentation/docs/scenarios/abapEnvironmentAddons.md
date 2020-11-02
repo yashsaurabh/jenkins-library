@@ -1,6 +1,6 @@
 # Build and Publish Add-on Products on SAP Cloud Platform ABAP Environment
 
-## Introduction
+## Introduction 
 
 !!! caution "Not yet released"
     This scenario is not yet available. It is still work in progress and will be released at a later time.
@@ -87,7 +87,7 @@ Later, during the pipeline configuration, you will specify the Service Plan, whi
 
 The add-on product needs to be registered. More details will follow soon.
 
-### Configuration
+### Config
 
 In the following subsections, the pipeline configuration for this scenario is explained. To get a general overview on the ABAP Environment Pipeline configuration, have a look [here](https://sap.github.io/jenkins-library/pipelines/abapEnvironment/configuration/). In addition to the following sections explaining the configuration, there will be an example repository including all required files.
 
