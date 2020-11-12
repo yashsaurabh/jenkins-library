@@ -305,7 +305,14 @@ void executeOnPod(Map config, utils, Closure body, Script script) {
                             stash name: "workspace-${config.uniqueId}", excludes: '**/*', allowEmpty: true
                             body()
                         } finally {
-                            stashWorkspace(config, 'container', true, true)
+                            try {
+                                echo "[MH] stashing workspace ..."
+                                stashWorkspace(config, 'container', true, true)
+                                echo "[MH] ... stashed workspace."
+                            } catch (Throwable thr) {
+                                echo "[MH] Cannot stash workspace: ${thr}"
+                            }
+                            echo "[MH] exiting finally."
                         }
                     }
                 } else {
