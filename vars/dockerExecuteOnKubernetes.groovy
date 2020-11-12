@@ -307,7 +307,7 @@ void executeOnPod(Map config, utils, Closure body, Script script) {
                         } finally {
                             try {
                                 echo "[MH] stashing workspace ..."
-                                sh "la -Rla"
+                                sh "ls -Rla"
                                 stashWorkspace(config, 'container', true, true)
                                 echo "[MH] ... stashed workspace."
                             } catch (Throwable thr) {
