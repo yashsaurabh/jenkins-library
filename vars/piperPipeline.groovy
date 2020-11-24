@@ -11,7 +11,7 @@ void call(parameters) {
         stages {
             stage('Init') {
                 steps {
-                    piperPipelineStageInit script: parameters.script, customDefaults: ['com.sap.piper/pipeline/stageOrdinals.yml'].plus(parameters.customDefaults ?: [])
+                    piperPipelineStageInit script: parameters.script, customDefaults: ['com.sap.piper/pipeline/stageOrdinals.yml'].plus(parameters.customDefaults ?: []), checkoutMap: parameters.checkoutMap
                 }
             }
             stage('Pull-Request Voting') {
