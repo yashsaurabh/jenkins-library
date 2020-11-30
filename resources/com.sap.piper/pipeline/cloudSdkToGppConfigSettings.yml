@@ -53,8 +53,6 @@ removedOrReplacedSteps:
     newStepName: "cloudFoundryDeploy"
   deployToNeoWithCli:
     newStepName: "deployToNeoWithCli"
-  executeFortifyScan:
-    newStepName: "fortifyExecuteScan"
   artifactSetVersion:
     newStepName: "artifactPrepareVersion"
     onlyCheckProjectConfig: true
