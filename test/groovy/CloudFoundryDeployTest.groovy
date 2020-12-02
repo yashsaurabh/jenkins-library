@@ -1343,6 +1343,8 @@ class CloudFoundryDeployTest extends BasePiperTest {
                 usedMetadataFile = metadataFile
         })
 
+        credentialsRule.withCredentials('mtaExtensionCredentialCredentialId', 'resolvedMtaExtensionCredential')
+
         stepRule.step.cloudFoundryDeploy([
             script: nullScript,
             juStabUtils: utils,
@@ -1352,6 +1354,7 @@ class CloudFoundryDeployTest extends BasePiperTest {
             cfOrg: 'irrelevant',
             cfSpace: 'irrelevant',
             cfCredentialsId: 'irrelevant',
+            mtaExtensionCredentials: [myCred: 'mtaExtensionCredentialCredentialId'],
         ])
 
         assertEquals('cloudFoundryDeploy', calledStep)

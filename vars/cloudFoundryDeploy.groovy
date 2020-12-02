@@ -232,11 +232,21 @@ void call(Map parameters = [:]) {
             .use()
 
         if (config.useGoStep == true) {
-            List credentials = [
-                [type: 'usernamePassword', id: 'cfCredentialsId', env: ['PIPER_username', 'PIPER_password']],
-                [type: 'usernamePassword', id: 'dockerCredentialsId', env: ['PIPER_dockerUsername', 'PIPER_dockerPassword']]
-            ]
-            piperExecuteBin(parameters, STEP_NAME, 'metadata/cloudFoundryDeploy.yaml', credentials)
+            def creds = []
+            if (config.mtaExtensionCredentials) {
+                config.mtaExtensionCredentials.each { key, credentialsId ->
+                    creds << string(credentialsId: credentialsId, variable: key)
+                }
+            }
+
+            withCredentials(creds) {
+
+                List credentials = [
+                    [type: 'usernamePassword', id: 'cfCredentialsId', env: ['PIPER_username', 'PIPER_password']],
+                    [type: 'usernamePassword', id: 'dockerCredentialsId', env: ['PIPER_dockerUsername', 'PIPER_dockerPassword']]
+                ]
+                piperExecuteBin(parameters, STEP_NAME, 'metadata/cloudFoundryDeploy.yaml', credentials)
+            }
             return
         }
 
