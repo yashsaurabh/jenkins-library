@@ -279,8 +279,8 @@ spec:
         description:
           "A list of source directories to scan. Wildcards can be used, e.g., `'src/main/java/**/*'`.
           If `'translate'` is set, this will ignored. The default value for `buildTool: 'maven'` is
-          ['**/*.xml', '**/*.html', '**/*.jsp', '**/*.js', '**/src/main/resources/**/*', '**/src/main/java/**/*'], for
-          `buildTool: 'pip'` it is ['./**/*']."
+          `['**/*.xml', '**/*.html', '**/*.jsp', '**/*.js', '**/src/main/resources/**/*', '**/src/main/java/**/*']`, for
+          `buildTool: 'pip'` it is `['./**/*']`."
         scope:
           - PARAMETERS
           - STAGES
@@ -530,9 +530,18 @@ spec:
           - STAGES
           - STEPS
         default: false
+      - name: installArtifacts
+        type: bool
+        description:
+          "If enabled, it will install all artifacts to the local maven repository to make them available before running Fortify.
+          This is required if any maven module has dependencies to other modules in the repository and they were not installed before."
+        scope:
+          - GENERAL
+          - STEPS
+          - STAGES
+          - PARAMETERS
   containers:
-    - image: "<<please bring your own fortify image>>"
-      workingDir: "/home/piper"
+    - image: ""
   outputs:
     resources:
       - name: influx

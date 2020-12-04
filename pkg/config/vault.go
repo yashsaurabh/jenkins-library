@@ -40,7 +40,7 @@ func getVaultClientFromConfig(config StepConfig, creds VaultCredentials) (vaultC
 	address, addressOk := config.Config["vaultServerUrl"].(string)
 	// if vault isn't used it's not an error
 	if !addressOk || creds.AppRoleID == "" || creds.AppRoleSecretID == "" {
-		log.Entry().Info("Skipping fetching secrets from vault since it is not configured")
+		log.Entry().Debug("Skipping fetching secrets from vault since it is not configured")
 		return nil, nil
 	}
 	namespace := ""
@@ -50,7 +50,7 @@ func getVaultClientFromConfig(config StepConfig, creds VaultCredentials) (vaultC
 		log.Entry().Debugf("Using vault namespace %s", namespace)
 	}
 
-	client, err := vault.NewClientWithAppRole(&api.Config{Address: address}, creds.AppRoleID, creds.AppRoleSecretID, namespace)
+	client, err := vault.NewClientWithAppRole(&vault.Config{Config: &api.Config{Address: address}, Namespace: namespace}, creds.AppRoleID, creds.AppRoleSecretID)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +85,7 @@ func resolveVaultReference(ref *ResourceReference, config *StepConfig, client va
 
 		secretValue = lookupPath(client, vaultPath, &param)
 		if secretValue != nil {
-			log.Entry().Infof("Resolved param '%s' with vault path '%s'", param.Name, vaultPath)
+			log.Entry().Debugf("Resolved param '%s' with vault path '%s'", param.Name, vaultPath)
 			if ref.Type == "vaultSecret" {
 				config.Config[param.Name] = *secretValue
 			} else if ref.Type == "vaultSecretFile" {
@@ -133,7 +133,7 @@ func createTemporarySecretFile(namePattern string, content string) (string, erro
 }
 
 func lookupPath(client vaultClient, path string, param *StepParameters) *string {
-	log.Entry().Infof("Trying to resolve vault parameter '%s' at '%s'", param.Name, path)
+	log.Entry().Debugf("Trying to resolve vault parameter '%s' at '%s'", param.Name, path)
 	secret, err := client.GetKvSecret(path)
 	if err != nil {
 		log.Entry().WithError(err).Warnf("Couldn't fetch secret at '%s'", path)
@@ -148,10 +148,11 @@ func lookupPath(client vaultClient, path string, param *StepParameters) *string 
 		log.RegisterSecret(field)
 		return &field
 	}
-
+	log.Entry().Debugf("Secret did not contain a field name '%s'", param.Name)
 	// try parameter aliases
 	for _, alias := range param.Aliases {
-		field := secret[param.Name]
+		log.Entry().Debugf("Trying alias field name '%s'", alias.Name)
+		field := secret[alias.Name]
 		if field != "" {
 			log.RegisterSecret(field)
 			if alias.Deprecated {
