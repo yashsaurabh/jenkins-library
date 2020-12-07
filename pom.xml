@@ -11,7 +11,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.sap.cp.jenkins</groupId>
-    <artifactId>jenkins-library</artifactId>
+    <artifactId>jenkins-library1</artifactId>
     <version>${revision}</version>
 
     <name>SAP CP Piper Library</name>
